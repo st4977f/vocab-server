@@ -23,11 +23,19 @@ mongoose
     process.exit(1);
   });
 
-const port = process.env.PORT || 3000; // Default to port 3000 if PORT is not set
+const port = process.env.PORT || 3000;
 const app = express();
 
+const allowedOrigins = process.env.CORS_ALLOWED_ORIGINS.split(",");
+
 const corsOptions = {
-  origin: process.env.CORS_ALLOWED_ORIGINS,
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   allowedHeaders: ["Content-Type", "Authorization"],
   preflightContinue: false,
