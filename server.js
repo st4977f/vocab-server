@@ -30,6 +30,7 @@ const allowedOrigins = process.env.CORS_ALLOWED_ORIGINS.split(",");
 
 const corsOptions = {
   origin: function (origin, callback) {
+    console.log("Request Origin:", origin); // Log the origin of the request
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
