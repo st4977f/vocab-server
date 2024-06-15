@@ -7,6 +7,9 @@ const routes = require("./api/routes/vocabRoutes");
 require("dotenv").config();
 
 mongoose.Promise = global.Promise;
+
+mongoose.set("debug", true); // Enable Mongoose debug mode for detailed logging
+
 mongoose
   .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
@@ -20,13 +23,16 @@ mongoose
     process.exit(1);
   });
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3000; // Default to port 3000 if PORT is not set
 const app = express();
 
 const corsOptions = {
-  origin: process.env.CORS_ALLOWED_ORIGINS.split(","),
-  optionsSuccessStatus: 200,
+  origin: "*",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
 };
+
 app.use(cors(corsOptions));
 
 app.use(bodyParser.urlencoded({ extended: true }));
