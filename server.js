@@ -27,7 +27,7 @@ const port = process.env.PORT || 3000; // Default to port 3000 if PORT is not se
 const app = express();
 
 const corsOptions = {
-  origin: process.env.CORS_ALLOWED_ORIGINS,
+  origin: "*",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
   optionsSuccessStatus: 204,
